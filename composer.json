@@ -2,5 +2,10 @@
     "require": {
         "react/http": "^1.6",
         "react/socket": "^1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebhookExample\\": "src/"
+        }
     }
 }
