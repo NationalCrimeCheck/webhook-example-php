@@ -31,6 +31,8 @@ class WebhookServer
         if (!isset($payload['data'])) return self::err('Missing payload field: data');
         if (!isset($payload['timestamp'])) return self::err('Missing payload field: timestamp');
 
+        $this->handlePayload($payload);
+
         return Response::plaintext("OK");
     }
 
@@ -48,6 +50,21 @@ class WebhookServer
             ['Content-Type' => 'text/plain; charset=utf-8'],
             $message
         );
+    }
+
+
+    /**
+     * Handle a webhook payload by performing some action
+     *
+     * @param array $payload Parsed and validated webhook payload
+     * @return void
+     */
+    protected function handlePayload(array $payload): void
+    {
+        echo str_pad($payload['person']['id'], 12);
+        echo str_pad($payload['event']['type'], 24);
+        echo str_pad($payload['timestamp'], 20);
+        echo PHP_EOL;
     }
 
 }
