@@ -9,6 +9,30 @@ class WebhookServer
 {
 
     /**
+     * File handle for the webhook log csv
+     */
+    private $log_fp;
+
+
+    /**
+     * Open the webhook log for writing
+     */
+    public function __construct()
+    {
+        $this->log_fp = fopen('webhook-log.csv', 'w');
+    }
+
+
+    /**
+     * Close the log
+     */
+    public function __destruct()
+    {
+        fclose($this->log_fp);
+    }
+
+
+    /**
      * Receive and handle an incoming HTTP request
      *
      * @param ServerRequestInterface $request Request details
@@ -62,6 +86,9 @@ class WebhookServer
         echo str_pad("EVENT TYPE", 24);
         echo str_pad("TIMESTAMP", 20);
         echo PHP_EOL;
+
+        // Write a new header to the csv log
+        fwrite($this->log_fp, "person_id,event_type,timestamp\n");
     }
 
 
@@ -77,6 +104,10 @@ class WebhookServer
         echo str_pad($payload['event']['type'], 24);
         echo str_pad($payload['timestamp'], 20);
         echo PHP_EOL;
+
+        // Write a log entry in csv format
+        fwrite($this->log_fp, "{$payload['person']['id']},{$payload['event']['type']},{$payload['timestamp']}\n");
+        fflush($this->log_fp);
     }
 
 }
