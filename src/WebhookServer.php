@@ -54,6 +54,18 @@ class WebhookServer
 
 
     /**
+     * Called after server is all set up but before the first webhook is received
+     */
+    public function init(): void
+    {
+        echo str_pad("PERSON ID", 12);
+        echo str_pad("EVENT TYPE", 24);
+        echo str_pad("TIMESTAMP", 20);
+        echo PHP_EOL;
+    }
+
+
+    /**
      * Handle a webhook payload by performing some action
      *
      * @param array $payload Parsed and validated webhook payload

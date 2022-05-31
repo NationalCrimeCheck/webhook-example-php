@@ -9,5 +9,6 @@ $http = new React\Http\HttpServer(function(Psr\Http\Message\ServerRequestInterfa
 
 $socket = new React\Socket\SocketServer('127.0.0.1:8080');
 $http->listen($socket);
+echo "Server running at http://127.0.0.1:8080", PHP_EOL, PHP_EOL;
 
-echo "Server running at http://127.0.0.1:8080" . PHP_EOL;
+$whsrv->init();
